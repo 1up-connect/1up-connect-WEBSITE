@@ -206,41 +206,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
       `,
     });
 
-    // ── 2. Auto-reply confirmation to the sender ─────────────
-    await resend.emails.send({
-      from:    '1UP Connect <onboarding@resend.dev>',
-      to:      [`${firstName} ${lastName} <${email}>`],
-      subject: `We got your message, ${firstName}! 👋`,
-      text: [
-        `Hey ${firstName},`,
-        ``,
-        `Thanks for reaching out to 1UP Connect! We've received your message and will get back to you soon.`,
-        ``,
-        `Here's a quick summary of what you sent us:`,
-        `  Enquiry type: ${enquiryLabel}`,
-        `  Message: ${message}`,
-        ``,
-        `In the meantime, follow us on Instagram @1upconnect for the latest events and updates.`,
-        ``,
-        `— The 1UP Connect Team`,
-        `1up-connect.com`,
-      ].join('\n'),
-      html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#ffffff;padding:32px;border-radius:8px">
-          <div style="text-align:center;padding-bottom:24px;border-bottom:1px solid rgba(41,171,226,0.2);margin-bottom:24px">
-            <h1 style="margin:0;color:#29ABE2;font-size:28px;font-style:italic;text-transform:uppercase;letter-spacing:2px">1UP CONNECT</h1>
-          </div>
-          <h2 style="color:#ffffff;font-size:20px;margin:0 0 12px">Hey ${firstName}! 👋</h2>
-          <p style="color:#a0a8b0;line-height:1.7;margin:0 0 16px">Thanks for reaching out. We've received your message and will get back to you shortly.</p>
-          <div style="background:#111820;border-left:3px solid #29ABE2;padding:16px;border-radius:0 6px 6px 0;margin:24px 0">
-            <p style="margin:0 0 6px;color:#a0a8b0;font-size:12px;text-transform:uppercase;letter-spacing:1px">Your message</p>
-            <p style="margin:0;line-height:1.6;white-space:pre-wrap;font-size:14px">${message}</p>
-          </div>
-          <p style="color:#a0a8b0;line-height:1.7;margin:0 0 24px">Follow us on Instagram <a href="https://instagram.com/1upconnect" style="color:#29ABE2">@1upconnect</a> for the latest events and updates.</p>
-          <p style="color:#a0a8b0;font-size:13px;margin:0">— The 1UP Connect Team</p>
-        </div>
-      `,
-    });
+    // ── 2. Auto-reply (disabled until Resend domain is verified) ─
 
     console.log(JSON.stringify({
       event:       'contact_email_sent',
