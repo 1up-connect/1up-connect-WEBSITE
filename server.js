@@ -6,7 +6,7 @@ const express      = require('express');
 const helmet       = require('helmet');
 const rateLimit    = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
-const nodemailer   = require('nodemailer');
+const { Resend }   = require('resend');
 const path         = require('path');
 
 const app      = express();
@@ -91,27 +91,15 @@ app.use(express.static(path.join(__dirname, 'public'), {
 }));
 
 /* ============================================================
-   NODEMAILER — GOOGLE WORKSPACE SMTP
-   Creates a reusable transporter (connection pooled)
+   RESEND — HTTP EMAIL API
    ============================================================ */
-const transporter = nodemailer.createTransport({
-  host:   'smtp.gmail.com',
-  port:   465,
-  secure: true, // SSL
-  auth: {
-    user: process.env.SMTP_USER, // contact@1up-connect.com
-    pass: process.env.SMTP_PASS, // Google App Password
-  },
-  pool: true,   // reuse connections
-  maxConnections: 3,
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Verify SMTP connection on startup (non-fatal — site still works if email is misconfigured)
-transporter.verify().then(() => {
-  console.log('✓ SMTP connection verified — email delivery ready');
-}).catch(err => {
-  console.warn('⚠ SMTP not connected (check .env SMTP_USER / SMTP_PASS):', err.message);
-});
+if (!process.env.RESEND_API_KEY) {
+  console.warn('⚠ RESEND_API_KEY not set — email delivery will fail');
+} else {
+  console.log('✓ Resend email client initialised');
+}
 
 /* ============================================================
    CONTACT FORM — INPUT VALIDATION RULES
@@ -181,11 +169,11 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
 
   try {
     // ── 1. Notification email to 1UP Connect ────────────────
-    await transporter.sendMail({
-      from:    '"1UP Connect Website" <info@1up-connect.com>',
-      to:      'info@1up-connect.com',
-      replyTo: `"${firstName} ${lastName}" <${email}>`,
-      subject: `[1UP Connect] New ${enquiryLabel} enquiry — ${firstName} ${lastName}`,
+    await resend.emails.send({
+      from:     '1UP Connect Website <info@1up-connect.com>',
+      to:       ['info@1up-connect.com'],
+      reply_to: `${firstName} ${lastName} <${email}>`,
+      subject:  `[1UP Connect] New ${enquiryLabel} enquiry — ${firstName} ${lastName}`,
       text: [
         `New contact form submission`,
         `──────────────────────────`,
@@ -219,9 +207,9 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
     });
 
     // ── 2. Auto-reply confirmation to the sender ─────────────
-    await transporter.sendMail({
-      from:    '"1UP Connect" <info@1up-connect.com>',
-      to:      `"${firstName} ${lastName}" <${email}>`,
+    await resend.emails.send({
+      from:    '1UP Connect <info@1up-connect.com>',
+      to:      [`${firstName} ${lastName} <${email}>`],
       subject: `We got your message, ${firstName}! 👋`,
       text: [
         `Hey ${firstName},`,
@@ -263,7 +251,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
     res.json({ success: true, message: "Message received! We'll be in touch soon." });
 
   } catch (err) {
-    console.error('EMAIL ERROR:', err.message, '| CODE:', err.code, '| SMTP_USER:', process.env.SMTP_USER || 'NOT SET');
+    console.error('EMAIL ERROR:', err.message, '| RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
     // Still respond success — don't expose email errors to the public
     res.json({ success: true, message: "Message received! We'll be in touch soon." });
   }
