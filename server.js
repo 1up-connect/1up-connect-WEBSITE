@@ -96,8 +96,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
    ============================================================ */
 const transporter = nodemailer.createTransport({
   host:   'smtp.gmail.com',
-  port:   587,
-  secure: false, // TLS via STARTTLS
+  port:   465,
+  secure: true, // SSL
   auth: {
     user: process.env.SMTP_USER, // contact@1up-connect.com
     pass: process.env.SMTP_PASS, // Google App Password
