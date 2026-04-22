@@ -226,18 +226,53 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
         `1up-connect.com`,
       ].join('\n'),
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#0d1117;color:#ffffff;padding:32px;border-radius:8px">
-          <div style="text-align:center;padding-bottom:24px;border-bottom:1px solid rgba(41,171,226,0.2);margin-bottom:24px">
-            <h1 style="margin:0;color:#29ABE2;font-size:28px;font-style:italic;text-transform:uppercase;letter-spacing:2px">1UP CONNECT</h1>
+        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f4f6f8;padding:32px 16px">
+
+          <!-- Header -->
+          <div style="background:linear-gradient(135deg,#0d1117 0%,#111820 100%);border-radius:12px 12px 0 0;padding:36px 32px;text-align:center">
+            <p style="margin:0 0 4px;color:#29ABE2;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase">West Melbourne</p>
+            <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:3px">1UP CONNECT</h1>
+            <div style="width:48px;height:3px;background:#29ABE2;margin:16px auto 0;border-radius:2px"></div>
           </div>
-          <h2 style="color:#ffffff;font-size:20px;margin:0 0 12px">Hey ${firstName}! 👋</h2>
-          <p style="color:#a0a8b0;line-height:1.7;margin:0 0 16px">Thanks for reaching out. We've received your message and will get back to you shortly.</p>
-          <div style="background:#111820;border-left:3px solid #29ABE2;padding:16px;border-radius:0 6px 6px 0;margin:24px 0">
-            <p style="margin:0 0 6px;color:#a0a8b0;font-size:12px;text-transform:uppercase;letter-spacing:1px">Your message</p>
-            <p style="margin:0;line-height:1.6;white-space:pre-wrap;font-size:14px">${message}</p>
+
+          <!-- Body -->
+          <div style="background:#ffffff;padding:36px 32px">
+            <h2 style="margin:0 0 8px;color:#0d1117;font-size:22px;font-weight:700">Hey ${firstName}, we got your message!</h2>
+            <p style="margin:0 0 24px;color:#555e6b;font-size:15px;line-height:1.7">Thanks for reaching out to 1UP Connect. We've received your enquiry and will get back to you within 1–2 business days.</p>
+
+            <!-- Summary card -->
+            <div style="background:#f4f6f8;border-radius:8px;padding:20px 24px;margin:0 0 24px">
+              <p style="margin:0 0 14px;color:#29ABE2;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase">Your Enquiry Summary</p>
+              <table style="width:100%;border-collapse:collapse">
+                <tr>
+                  <td style="padding:6px 0;color:#888f99;font-size:13px;width:110px;vertical-align:top">Enquiry type</td>
+                  <td style="padding:6px 0;color:#0d1117;font-size:13px;font-weight:600">
+                    <span style="background:#e8f6fd;color:#29ABE2;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700">${enquiryLabel}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;color:#888f99;font-size:13px;vertical-align:top">Message</td>
+                  <td style="padding:6px 0;color:#333c48;font-size:13px;line-height:1.6">${message}</td>
+                </tr>
+              </table>
+            </div>
+
+            <!-- Divider -->
+            <div style="border-top:1px solid #e8ebef;margin:24px 0"></div>
+
+            <!-- Instagram CTA -->
+            <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on Instagram for the latest events, tournaments, and updates from the community.</p>
+            <div style="text-align:center;margin:0 0 8px">
+              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:#29ABE2;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">Follow @1upconnect</a>
+            </div>
           </div>
-          <p style="color:#a0a8b0;line-height:1.7;margin:0 0 24px">Follow us on Instagram <a href="https://instagram.com/1upconnect" style="color:#29ABE2">@1upconnect</a> for the latest events and updates.</p>
-          <p style="color:#a0a8b0;font-size:13px;margin:0">— The 1UP Connect Team</p>
+
+          <!-- Footer -->
+          <div style="background:#0d1117;border-radius:0 0 12px 12px;padding:20px 32px;text-align:center">
+            <p style="margin:0 0 4px;color:#ffffff;font-size:13px;font-weight:600">1UP Connect &mdash; West Melbourne, VIC</p>
+            <p style="margin:0;font-size:12px"><a href="https://1up-connect.com" style="color:#29ABE2;text-decoration:none">1up-connect.com</a></p>
+          </div>
+
         </div>
       `,
     });
