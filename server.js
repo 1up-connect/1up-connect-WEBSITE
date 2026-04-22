@@ -170,8 +170,8 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
   try {
     // ── 1. Notification email to 1UP Connect ────────────────
     await resend.emails.send({
-      from:     '1UP Connect Website <info@1up-connect.com>',
-      to:       ['info@1up-connect.com'],
+      from:     '1UP Connect Website <contact@1up-connect.com>',
+      to:       ['contact@1up-connect.com'],
       reply_to: `${firstName} ${lastName} <${email}>`,
       subject:  `[1UP Connect] New ${enquiryLabel} enquiry — ${firstName} ${lastName}`,
       text: [
@@ -208,7 +208,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
 
     // ── 2. Auto-reply confirmation to the sender ─────────────
     await resend.emails.send({
-      from:    '1UP Connect <info@1up-connect.com>',
+      from:    '1UP Connect <contact@1up-connect.com>',
       to:      [`${firstName} ${lastName} <${email}>`],
       subject: `We got your message, ${firstName}! 👋`,
       text: [
