@@ -230,9 +230,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
 
           <!-- Header -->
           <div style="background:linear-gradient(135deg,#0d1117 0%,#111820 100%);border-radius:12px 12px 0 0;padding:36px 32px;text-align:center">
-            <p style="margin:0 0 4px;color:#29ABE2;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase">West Melbourne</p>
-            <h1 style="margin:0;color:#ffffff;font-size:32px;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:3px">1UP CONNECT</h1>
-            <div style="width:48px;height:3px;background:#29ABE2;margin:16px auto 0;border-radius:2px"></div>
+            <img src="https://1up-connect.com/assets/Glow1UpConnect%20copy.png" alt="1UP Connect" width="200" style="display:block;margin:0 auto;max-width:200px" />
           </div>
 
           <!-- Body -->
@@ -263,7 +261,10 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
             <!-- Instagram CTA -->
             <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on Instagram for the latest events, tournaments, and updates from the community.</p>
             <div style="text-align:center;margin:0 0 8px">
-              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:#29ABE2;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">Follow @1upconnect</a>
+              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:#29ABE2;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/240px-Instagram_icon.png" alt="" width="16" height="16" style="vertical-align:middle;margin-right:8px;border-radius:3px" />
+                Follow @1upconnect
+              </a>
             </div>
           </div>
 
