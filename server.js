@@ -261,9 +261,8 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
             <!-- Instagram CTA -->
             <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on Instagram for the latest events, tournaments, and updates from the community.</p>
             <div style="text-align:center;margin:0 0 8px">
-              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:#29ABE2;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/240px-Instagram_icon.png" alt="" width="16" height="16" style="vertical-align:middle;margin-right:8px;border-radius:3px" />
-                Follow @1upconnect
+              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">
+                &#x1F4F7; Follow @1upconnect
               </a>
             </div>
           </div>
