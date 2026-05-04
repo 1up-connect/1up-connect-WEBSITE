@@ -269,7 +269,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
 
           <!-- Footer -->
           <div style="background:#0d1117;border-radius:0 0 12px 12px;padding:20px 32px;text-align:center">
-            <p style="margin:0 0 4px;color:#ffffff;font-size:13px;font-weight:600">1UP Connect &mdash; West Melbourne, VIC</p>
+            <p style="margin:0 0 4px;color:#ffffff;font-size:13px;font-weight:600">1UP Connect &mdash; Melbourne, VIC</p>
             <p style="margin:0;font-size:12px"><a href="https://1up-connect.com" style="color:#29ABE2;text-decoration:none">1up-connect.com</a></p>
           </div>
 
