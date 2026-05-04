@@ -258,11 +258,16 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
             <!-- Divider -->
             <div style="border-top:1px solid #e8ebef;margin:24px 0"></div>
 
-            <!-- Instagram CTA -->
-            <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on Instagram for the latest events, tournaments, and updates from the community.</p>
+            <!-- Social CTA -->
+            <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on socials for the latest events, tournaments, and updates from the community.</p>
             <div style="text-align:center;margin:0 0 8px">
-              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 28px;border-radius:6px;letter-spacing:0.5px">
-                &#x1F4F7; Follow @1upconnect
+              <!-- Instagram button -->
+              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:#29ABE2;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:6px;letter-spacing:0.5px;margin:4px">
+                <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' ry='5'/%3E%3Cpath d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z'/%3E%3Ccircle cx='17.5' cy='6.5' r='1.2' fill='%23fff' stroke='none'/%3E%3C/svg%3E" alt="" width="16" height="16" style="vertical-align:middle;margin-right:7px" />@1upconnect
+              </a>
+              <!-- TikTok button -->
+              <a href="https://tiktok.com/@1upconnect" style="display:inline-block;background:#010101;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:6px;letter-spacing:0.5px;margin:4px">
+                <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z'/%3E%3C/svg%3E" alt="" width="16" height="16" style="vertical-align:middle;margin-right:7px" />@1upconnect
               </a>
             </div>
           </div>
