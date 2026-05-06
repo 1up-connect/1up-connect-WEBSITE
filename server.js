@@ -226,59 +226,111 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
         `1up-connect.com`,
       ].join('\n'),
       html: `
-        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;background:#f4f6f8;padding:32px 16px">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f0f4f8; padding:32px 0;">
+          <tr>
+            <td align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px; width:100%;">
 
-          <!-- Header -->
-          <div style="background:linear-gradient(135deg,#0d1117 0%,#111820 100%);border-radius:12px 12px 0 0;padding:36px 32px;text-align:center">
-            <img src="https://1up-connect.com/assets/Glow1UpConnect%20copy.png" alt="1UP Connect" width="200" style="display:block;margin:0 auto;max-width:200px" />
-          </div>
-
-          <!-- Body -->
-          <div style="background:#ffffff;padding:36px 32px">
-            <h2 style="margin:0 0 8px;color:#0d1117;font-size:22px;font-weight:700">Hey ${firstName}, we got your message!</h2>
-            <p style="margin:0 0 24px;color:#555e6b;font-size:15px;line-height:1.7">Thanks for reaching out to 1UP Connect. We've received your enquiry and will get back to you within 1–2 business days.</p>
-
-            <!-- Summary card -->
-            <div style="background:#f4f6f8;border-radius:8px;padding:20px 24px;margin:0 0 24px">
-              <p style="margin:0 0 14px;color:#29ABE2;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase">Your Enquiry Summary</p>
-              <table style="width:100%;border-collapse:collapse">
+                <!-- Header -->
                 <tr>
-                  <td style="padding:6px 0;color:#888f99;font-size:13px;width:110px;vertical-align:top">Enquiry type</td>
-                  <td style="padding:6px 0;color:#0d1117;font-size:13px;font-weight:600">
-                    <span style="background:#e8f6fd;color:#29ABE2;padding:3px 10px;border-radius:4px;font-size:12px;font-weight:700">${enquiryLabel}</span>
+                  <td style="background-color:#0d1117; border-radius:24px 24px 0 0; padding:32px; text-align:center;">
+                    <img src="https://1up-connect.com/assets/Glow1UpConnect%20copy.png" alt="1UP Connect" width="180" style="display:block; margin:0 auto; max-width:180px; border:0;" />
                   </td>
                 </tr>
+
+                <!-- Greeting -->
                 <tr>
-                  <td style="padding:6px 0;color:#888f99;font-size:13px;vertical-align:top">Message</td>
-                  <td style="padding:6px 0;color:#333c48;font-size:13px;line-height:1.6">${message}</td>
+                  <td style="background-color:#ffffff; border-left:1px solid #e7ebef; border-right:1px solid #e7ebef; padding:36px 32px 18px 32px;">
+                    <div style="font-size:24px; line-height:32px; font-weight:bold; color:#18212b; margin:0 0 12px 0;">
+                      Hi ${firstName},
+                    </div>
+                    <div style="font-size:16px; line-height:28px; color:#334155; margin:0;">
+                      Thanks for reaching out to 1UP Connect. We've received your enquiry and our team will review it shortly. We'll get back to you as soon as possible with the right next steps.
+                    </div>
+                  </td>
                 </tr>
+
+                <!-- Enquiry summary -->
+                <tr>
+                  <td style="background-color:#ffffff; border-left:1px solid #e7ebef; border-right:1px solid #e7ebef; padding:0 32px 18px 32px;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%; border:1px solid #e6ebf0; border-radius:18px;">
+                      <tr>
+                        <td style="padding:22px 22px 10px 22px;">
+                          <div style="font-size:12px; line-height:12px; font-weight:bold; letter-spacing:1.4px; text-transform:uppercase; color:#29ABE2; margin:0 0 12px 0;">
+                            Enquiry Summary
+                          </div>
+                          <div style="font-size:14px; line-height:22px; color:#5b6673; font-weight:bold; margin:0 0 4px 0;">Enquiry type</div>
+                          <div style="font-size:16px; line-height:26px; color:#18212b; margin:0 0 18px 0;">${enquiryLabel}</div>
+                          <div style="font-size:14px; line-height:22px; color:#5b6673; font-weight:bold; margin:0 0 6px 0;">Message</div>
+                          <div style="font-size:15px; line-height:26px; color:#27313c; margin:0; white-space:pre-wrap; word-break:break-word; overflow-wrap:break-word;">${message}</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- What happens next -->
+                <tr>
+                  <td style="background-color:#ffffff; border-left:1px solid #e7ebef; border-right:1px solid #e7ebef; padding:4px 32px 28px 32px;">
+                    <div style="font-size:20px; line-height:28px; font-weight:bold; color:#18212b; margin:0 0 18px 0;">What happens next</div>
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+                      <tr>
+                        <td valign="top" width="34" style="width:34px; padding:0 0 14px 0;">
+                          <div style="width:24px; height:24px; line-height:24px; text-align:center; background-color:#eaf7fc; color:#29ABE2; font-size:13px; font-weight:bold; border-radius:999px;">1</div>
+                        </td>
+                        <td valign="top" style="padding:0 0 14px 0;">
+                          <div style="font-size:15px; line-height:25px; color:#334155;">We'll review your enquiry and make sure it lands with the right person.</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="34" style="width:34px; padding:0 0 14px 0;">
+                          <div style="width:24px; height:24px; line-height:24px; text-align:center; background-color:#eaf7fc; color:#29ABE2; font-size:13px; font-weight:bold; border-radius:999px;">2</div>
+                        </td>
+                        <td valign="top" style="padding:0 0 14px 0;">
+                          <div style="font-size:15px; line-height:25px; color:#334155;">We'll respond as soon as possible with a clear next step.</div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="34" style="width:34px; padding:0;">
+                          <div style="width:24px; height:24px; line-height:24px; text-align:center; background-color:#eaf7fc; color:#29ABE2; font-size:13px; font-weight:bold; border-radius:999px;">3</div>
+                        </td>
+                        <td valign="top" style="padding:0;">
+                          <div style="font-size:15px; line-height:25px; color:#334155;">Follow us for upcoming events, community drops and updates across Melbourne.</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                  <td style="background-color:#0d1117; border-radius:0 0 24px 24px; padding:26px 32px 30px 32px; text-align:center;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 18px auto;">
+                      <tr>
+                        <td align="center" style="padding:0 8px;">
+                          <a href="https://www.instagram.com/1upconnect" target="_blank" style="text-decoration:none;">
+                            <img src="https://1up-connect.com/assets/instagram.png" alt="Instagram" width="24" style="display:block; width:24px; height:auto; border:0;" />
+                          </a>
+                        </td>
+                        <td align="center" style="padding:0 8px;">
+                          <a href="https://www.tiktok.com/@1upconnect" target="_blank" style="text-decoration:none;">
+                            <img src="https://1up-connect.com/assets/tiktok.png" alt="TikTok" width="24" style="display:block; width:24px; height:auto; border:0;" />
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                    <div style="font-size:16px; line-height:24px; font-weight:bold; color:#ffffff; margin:0 0 6px 0;">1UP Connect</div>
+                    <div style="font-size:14px; line-height:22px; margin:0 0 8px 0;">
+                      <a href="https://1up-connect.com" target="_blank" style="color:#29ABE2; text-decoration:none;">1up-connect.com</a>
+                    </div>
+                    <div style="font-size:13px; line-height:22px; color:#9aa6b2; margin:0;">Social sport, fitness and real-world experiences across Melbourne.</div>
+                  </td>
+                </tr>
+
               </table>
-            </div>
-
-            <!-- Divider -->
-            <div style="border-top:1px solid #e8ebef;margin:24px 0"></div>
-
-            <!-- Social CTA -->
-            <p style="margin:0 0 20px;color:#555e6b;font-size:14px;line-height:1.7">In the meantime, follow us on socials for the latest events, tournaments, and updates from the community.</p>
-            <div style="text-align:center;margin:0 0 8px">
-              <!-- Instagram button -->
-              <a href="https://instagram.com/1upconnect" style="display:inline-block;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:6px;letter-spacing:0.5px;margin:4px">
-                <img src="https://1up-connect.com/assets/icon-instagram.png" alt="" width="16" height="16" style="vertical-align:middle;margin-right:7px" />@1upconnect
-              </a>
-              <!-- TikTok button -->
-              <a href="https://tiktok.com/@1upconnect" style="display:inline-block;background:#010101;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 22px;border-radius:6px;letter-spacing:0.5px;margin:4px">
-                <img src="https://1up-connect.com/assets/icon-tiktok.png" alt="" width="16" height="16" style="vertical-align:middle;margin-right:7px" />@1upconnect
-              </a>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div style="background:#0d1117;border-radius:0 0 12px 12px;padding:20px 32px;text-align:center">
-            <p style="margin:0 0 4px;color:#ffffff;font-size:13px;font-weight:600">1UP Connect &mdash; Melbourne, VIC</p>
-            <p style="margin:0;font-size:12px"><a href="https://1up-connect.com" style="color:#29ABE2;text-decoration:none">1up-connect.com</a></p>
-          </div>
-
-        </div>
+            </td>
+          </tr>
+        </table>
       `,
     });
 
