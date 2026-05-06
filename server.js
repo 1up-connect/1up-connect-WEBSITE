@@ -82,14 +82,8 @@ if (IS_PROD) {
 }
 
 /* ============================================================
-   STATIC FILES
+   STATIC ASSET OVERRIDES
    ============================================================ */
-app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: IS_PROD ? '1d' : 0,
-  etag:   true,
-  index:  'index.html',
-}));
-
 app.get('/robots.txt', (_req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
 });
@@ -98,6 +92,15 @@ app.get('/sitemap.xml', (_req, res) => {
   res.type('application/xml');
   res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
 });
+
+/* ============================================================
+   STATIC FILES
+   ============================================================ */
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: IS_PROD ? '1d' : 0,
+  etag:   true,
+  index:  'index.html',
+}));
 
 /* ============================================================
    RESEND — HTTP EMAIL API
