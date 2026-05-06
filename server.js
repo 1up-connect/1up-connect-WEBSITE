@@ -323,7 +323,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
                     <div style="font-size:14px; line-height:22px; margin:0 0 8px 0;">
                       <a href="https://1up-connect.com" target="_blank" style="color:#29ABE2; text-decoration:none;">1up-connect.com</a>
                     </div>
-                    <div style="font-size:13px; line-height:22px; color:#9aa6b2; margin:0;">Social sport, fitness and real-world experiences across Melbourne.</div>
+                    <div style="font-size:13px; line-height:22px; color:#9aa6b2; margin:0;">A community for moving more, meeting people and growing through shared experiences.</div>
                   </td>
                 </tr>
 
