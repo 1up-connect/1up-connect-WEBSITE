@@ -309,12 +309,12 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
                       <tr>
                         <td align="center" style="padding:0 8px;">
                           <a href="https://www.instagram.com/1upconnect" target="_blank" style="text-decoration:none;">
-                            <img src="https://1up-connect.com/assets/instagram.png" alt="Instagram" width="24" style="display:block; width:24px; height:auto; border:0;" />
+                            <img src="https://1up-connect.com/assets/instagram.png?v=2" alt="Instagram" width="24" style="display:block; width:24px; height:auto; border:0;" />
                           </a>
                         </td>
                         <td align="center" style="padding:0 8px;">
                           <a href="https://www.tiktok.com/@1upconnect" target="_blank" style="text-decoration:none;">
-                            <img src="https://1up-connect.com/assets/tiktok.png" alt="TikTok" width="24" style="display:block; width:24px; height:auto; border:0;" />
+                            <img src="https://1up-connect.com/assets/tiktok.png?v=2" alt="TikTok" width="24" style="display:block; width:24px; height:auto; border:0;" />
                           </a>
                         </td>
                       </tr>
