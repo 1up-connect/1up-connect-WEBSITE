@@ -90,6 +90,15 @@ app.use(express.static(path.join(__dirname, 'public'), {
   index:  'index.html',
 }));
 
+app.get('/robots.txt', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'robots.txt'));
+});
+
+app.get('/sitemap.xml', (_req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'public', 'sitemap.xml'));
+});
+
 /* ============================================================
    RESEND — HTTP EMAIL API
    ============================================================ */
