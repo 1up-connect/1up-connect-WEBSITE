@@ -245,7 +245,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
                       Hi ${firstName},
                     </div>
                     <div style="font-size:16px; line-height:28px; color:#334155; margin:0;">
-                      Thanks for reaching out to 1UP Connect. We've received your enquiry and our team will review it shortly. We'll get back to you as soon as possible with the right next steps.
+                      Thanks for reaching out to 1UP Connect. We've got your enquiry and will take a look over the details shortly. Someone from our team will be in touch soon.
                     </div>
                   </td>
                 </tr>
