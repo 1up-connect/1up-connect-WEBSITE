@@ -417,7 +417,8 @@ body > nav {
   margin: 0 auto;
   padding: 96px 48px;
 }
-.section-dark { background: var(--dark); }
+.section-dark     { background: var(--dark); }
+.section-charcoal { background: var(--card-hover); }
 
 .section-label {
   font-family: var(--font-display);
