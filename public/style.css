@@ -239,6 +239,40 @@ body > nav {
   width: min(400px, 82vw);
   margin-bottom: 32px;
 }
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--blue-border);
+  border-radius: 999px;
+  background: rgba(41, 171, 226, 0.08);
+  color: var(--white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: border-color var(--ease), background var(--ease);
+}
+.hero-pill:hover {
+  border-color: var(--blue);
+  background: rgba(41, 171, 226, 0.14);
+}
+.pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 10px var(--blue-glow);
+  animation: pill-pulse 2s ease-in-out infinite;
+}
+@keyframes pill-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
 .hero-tagline {
   font-family: var(--font-display);
   font-size: clamp(38px, 6vw, 76px);
@@ -851,6 +885,7 @@ footer {
 
   /* Hero */
   #home { padding-top: var(--nav-height); }
+  .hero-pill { font-size: 11px; letter-spacing: 1.5px; padding: 7px 14px; gap: 8px; }
   .hero-btns { flex-direction: column; width: 100%; max-width: 300px; }
   .btn-primary,
   .btn-secondary { width: 100%; justify-content: center; }
