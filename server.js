@@ -120,14 +120,12 @@ const contactValidation = [
   body('firstName')
     .trim()
     .notEmpty().withMessage('First name is required.')
-    .isLength({ max: 50 }).withMessage('First name is too long.')
-    .escape(),
+    .isLength({ max: 50 }).withMessage('First name is too long.'),
 
   body('lastName')
     .trim()
     .notEmpty().withMessage('Last name is required.')
-    .isLength({ max: 50 }).withMessage('Last name is too long.')
-    .escape(),
+    .isLength({ max: 50 }).withMessage('Last name is too long.'),
 
   body('email')
     .trim()
@@ -139,7 +137,7 @@ const contactValidation = [
     .optional({ checkFalsy: true })
     .trim()
     .isLength({ max: 20 }).withMessage('Phone number is too long.')
-    .matches(/^[\d\s+\-()\\.]+$/).withMessage('Invalid phone number format.'),
+    .matches(/^[\d\s+\-().]+$/).withMessage('Invalid phone number format.'),
 
   body('enquiryType')
     .trim()
@@ -151,9 +149,15 @@ const contactValidation = [
     .trim()
     .notEmpty().withMessage('Message is required.')
     .isLength({ min: 10, max: 1000 })
-    .withMessage('Message must be between 10 and 1000 characters.')
-    .escape(),
+    .withMessage('Message must be between 10 and 1000 characters.'),
 ];
+
+/* Escape user input at the point it enters HTML (plaintext emails
+   and subjects stay readable — no &#x27; artifacts in names). */
+const escapeHtml = (str = '') =>
+  String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
 
 /* ============================================================
    POST /api/contact
@@ -179,12 +183,26 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
   };
   const enquiryLabel = enquiryLabels[enquiryType] || enquiryType;
 
+  // Escaped copies for HTML email bodies only
+  const safe = {
+    firstName: escapeHtml(firstName),
+    lastName:  escapeHtml(lastName),
+    email:     escapeHtml(email),
+    phone:     escapeHtml(phone || 'Not provided'),
+    message:   escapeHtml(message),
+  };
+
+  // Display name stripped of characters that could break an address header
+  const addressName = `${firstName} ${lastName}`.replace(/[<>@,;"\r\n]/g, '').trim() || 'Website Visitor';
+
   try {
     // ── 1. Notification email to 1UP Connect ────────────────
-    await resend.emails.send({
+    // Resend's SDK returns { data, error } instead of throwing on
+    // API failures, so the error must be checked explicitly.
+    const { error: sendError } = await resend.emails.send({
       from:     '1UP Connect Website <contact@1up-connect.com>',
       to:       ['contact@1up-connect.com'],
-      reply_to: `${firstName} ${lastName} <${email}>`,
+      reply_to: `${addressName} <${email}>`,
       subject:  `[1UP Connect] New ${enquiryLabel} enquiry — ${firstName} ${lastName}`,
       text: [
         `New contact form submission`,
@@ -204,24 +222,34 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
             <p style="margin:4px 0 0;color:#a0a8b0;font-size:14px">1UP Connect Website</p>
           </div>
           <table style="width:100%;border-collapse:collapse">
-            <tr><td style="padding:8px 0;color:#a0a8b0;width:100px">Name</td><td style="padding:8px 0;font-weight:600">${firstName} ${lastName}</td></tr>
-            <tr><td style="padding:8px 0;color:#a0a8b0">Email</td><td style="padding:8px 0"><a href="mailto:${email}" style="color:#29ABE2">${email}</a></td></tr>
-            <tr><td style="padding:8px 0;color:#a0a8b0">Phone</td><td style="padding:8px 0">${phone || 'Not provided'}</td></tr>
+            <tr><td style="padding:8px 0;color:#a0a8b0;width:100px">Name</td><td style="padding:8px 0;font-weight:600">${safe.firstName} ${safe.lastName}</td></tr>
+            <tr><td style="padding:8px 0;color:#a0a8b0">Email</td><td style="padding:8px 0"><a href="mailto:${safe.email}" style="color:#29ABE2">${safe.email}</a></td></tr>
+            <tr><td style="padding:8px 0;color:#a0a8b0">Phone</td><td style="padding:8px 0">${safe.phone}</td></tr>
             <tr><td style="padding:8px 0;color:#a0a8b0">Enquiry</td><td style="padding:8px 0"><span style="background:rgba(41,171,226,0.15);color:#29ABE2;padding:3px 10px;border-radius:4px;font-size:13px;font-weight:700">${enquiryLabel}</span></td></tr>
           </table>
           <div style="margin-top:24px;background:#111820;border-left:3px solid #29ABE2;padding:16px;border-radius:0 6px 6px 0">
             <p style="margin:0 0 8px;color:#a0a8b0;font-size:13px;text-transform:uppercase;letter-spacing:1px">Message</p>
-            <p style="margin:0;line-height:1.6;white-space:pre-wrap">${message}</p>
+            <p style="margin:0;line-height:1.6;white-space:pre-wrap">${safe.message}</p>
           </div>
-          <p style="margin-top:24px;font-size:13px;color:#a0a8b0">Hit reply to respond directly to ${firstName}.</p>
+          <p style="margin-top:24px;font-size:13px;color:#a0a8b0">Hit reply to respond directly to ${safe.firstName}.</p>
         </div>
       `,
     });
+    if (sendError) throw new Error(sendError.message || 'Resend API error');
+  } catch (err) {
+    console.error('EMAIL ERROR:', err.message, '| RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
+    // Don't pretend it worked — give the sender a fallback so the enquiry isn't lost
+    return res.status(502).json({
+      error: "Sorry — we couldn't send your message right now. Please email us directly at contact@1up-connect.com.",
+    });
+  }
 
-    // ── 2. Auto-reply confirmation to the sender ─────────────
-    await resend.emails.send({
+  // ── 2. Auto-reply confirmation to the sender ─────────────
+  // Best-effort: a failed auto-reply shouldn't fail the submission
+  try {
+    const { error: replyError } = await resend.emails.send({
       from:    '1UP Connect <contact@1up-connect.com>',
-      to:      [`${firstName} ${lastName} <${email}>`],
+      to:      [email],
       subject: `We got your message, ${firstName}! 👋`,
       text: [
         `Hey ${firstName},`,
@@ -254,7 +282,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
                 <tr>
                   <td style="background-color:#ffffff; border-left:1px solid #e7ebef; border-right:1px solid #e7ebef; padding:36px 32px 18px 32px;">
                     <div style="font-size:24px; line-height:32px; font-weight:bold; color:#18212b; margin:0 0 12px 0;">
-                      Hi ${firstName},
+                      Hi ${safe.firstName},
                     </div>
                     <div style="font-size:16px; line-height:28px; color:#334155; margin:0;">
                       Thanks for reaching out to 1UP Connect. We've got your enquiry and will take a look over the details shortly. Someone from our team will be in touch soon.
@@ -274,7 +302,7 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
                           <div style="font-size:14px; line-height:22px; color:#5b6673; font-weight:bold; margin:0 0 4px 0;">Enquiry type</div>
                           <div style="font-size:16px; line-height:26px; color:#18212b; margin:0 0 18px 0;">${enquiryLabel}</div>
                           <div style="font-size:14px; line-height:22px; color:#5b6673; font-weight:bold; margin:0 0 6px 0;">Message</div>
-                          <div style="font-size:15px; line-height:26px; color:#27313c; margin:0; white-space:pre-wrap; word-break:break-word; overflow-wrap:break-word;">${message}</div>
+                          <div style="font-size:15px; line-height:26px; color:#27313c; margin:0; white-space:pre-wrap; word-break:break-word; overflow-wrap:break-word;">${safe.message}</div>
                         </td>
                       </tr>
                     </table>
@@ -345,20 +373,18 @@ app.post('/api/contact', contactLimiter, contactValidation, async (req, res) => 
         </table>
       `,
     });
-
-    console.log(JSON.stringify({
-      event:       'contact_email_sent',
-      enquiryType,
-      timestamp:   new Date().toISOString(),
-    }));
-
-    res.json({ success: true, message: "Message received! We'll be in touch soon." });
-
+    if (replyError) console.error('AUTO-REPLY ERROR:', replyError.message);
   } catch (err) {
-    console.error('EMAIL ERROR:', err.message, '| RESEND_API_KEY set:', !!process.env.RESEND_API_KEY);
-    // Still respond success — don't expose email errors to the public
-    res.json({ success: true, message: "Message received! We'll be in touch soon." });
+    console.error('AUTO-REPLY ERROR:', err.message);
   }
+
+  console.log(JSON.stringify({
+    event:       'contact_email_sent',
+    enquiryType,
+    timestamp:   new Date().toISOString(),
+  }));
+
+  res.json({ success: true, message: "Message received! We'll be in touch soon." });
 });
 
 /* ============================================================
