@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "1up-connect",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4567", "--directory", "/Users/bd/Library/Mobile Documents/com~apple~CloudDocs/1UP/1UP-Connect/1up-connect-WEBSITE/public"],
-      "port": 4567
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "port": 3000
     }
   ]
 }
